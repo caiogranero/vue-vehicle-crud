@@ -1,17 +1,18 @@
-const db = require('../config/db')
+const connection = require('../config/db')
 
 const Database = {
   query (id = null) {
     return new Promise((resolve, reject) => {
-      db.open()
-      .then((db) => {
-        db.collection(db.getCollection()).find(id).toArray((err, result) => {
+      let database = null
+      connection.open().then((db) => {
+        database = db
+        db.collection(connection.getCollection()).find(id).toArray((err, result) => {
           if (err) reject(err)
           resolve(result)
         })
       })
       .then(() => {
-        db.close()
+        database.close()
       })
       .catch(err => {
         console.error(err.toString())
@@ -21,15 +22,16 @@ const Database = {
 
   delete (id) {
     return new Promise((resolve, reject) => {
-      db.open()
-      .then((db) => {
-        db.collection(db.getCollection()).deleteOne(id, (err, result) => {
+      let database = null
+      connection.open().then((db) => {
+        database = db
+        db.collection(connection.getCollection()).deleteOne(id, (err, result) => {
           if (err) reject(err)
           resolve(result)
         })
       })
       .then(() => {
-        db.close()
+        database.close()
       })
       .catch(err => {
         console.error(err.toString())
@@ -39,15 +41,16 @@ const Database = {
 
   update (id, data) {
     return new Promise((resolve, reject) => {
-      db.open()
-      .then((db) => {
-        db.collection(db.getCollection()).updateOne(id, { $set: data }, (err, result) => {
+      let database = null
+      connection.open().then((db) => {
+        database = db
+        db.collection(connection.getCollection()).updateOne(id, { $set: data }, (err, result) => {
           if (err) reject(err)
           resolve(result)
         })
       })
       .then(() => {
-        db.close()
+        database.close()
       })
       .catch(err => {
         console.error(err.toString())
@@ -57,15 +60,16 @@ const Database = {
 
   replace (id, data) {
     return new Promise((resolve, reject) => {
-      db.open()
-      .then((db) => {
-        db.collection(db.getCollection()).replaceOne(id, data, (err, result) => {
+      let database = null
+      connection.open().then((db) => {
+        database = db
+        db.collection(connection.getCollection()).replaceOne(id, data, (err, result) => {
           if (err) reject(err)
           resolve(result)
         })
       })
       .then(() => {
-        db.close()
+        database.close()
       })
       .catch(err => {
         console.error(err.toString())
@@ -75,15 +79,16 @@ const Database = {
 
   insert (items) {
     return new Promise((resolve, reject) => {
-      db.open()
-      .then((db) => {
-        db.collection(db.getCollection()).insertOne(items, (err, result) => {
+      let database = null
+      connection.open().then((db) => {
+        database = db
+        db.collection(connection.getCollection()).insertOne(items, (err, result) => {
           if (err) reject(err)
           resolve(result)
         })
       })
       .then(() => {
-        db.close()
+        database.close()
       })
       .catch(err => {
         console.error(err.toString())

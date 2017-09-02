@@ -3,7 +3,12 @@ const ObjectId = require('mongodb').ObjectID
 
 module.exports = function (app) {
   app.post('/api/veiculos', (req, res) => {
-    if (req.body) {
+    if (req.body.veiculo &&
+        req.body.marca &&
+        req.body.ano &&
+        req.body.descricao &&
+        req.body.vendido) {
+      req.body = Object.assign(req.body, {created: new Date(), updated: new Date()})
       Database.insert(req.body).then(results => {
         res.status(200).send({error: false, message: results.insertedId})
       })
@@ -40,6 +45,7 @@ module.exports = function (app) {
   app.put('/api/veiculos/:id', (req, res) => {
     if (req.params.id) {
       if (req.body) {
+        req.body = Object.assign(req.body, {updated: new Date()})
         Database.replace({_id: ObjectId(req.params.id)}, req.body).then(results => {
           res.status(200).send({error: false, message: results})
         })
@@ -57,6 +63,7 @@ module.exports = function (app) {
   app.patch('/api/veiculos/:id', (req, res) => {
     if (req.params.id) {
       if (req.body) {
+        req.body = Object.assign(req.body, {updated: new Date()})
         Database.update({_id: ObjectId(req.params.id)}, req.body).then(results => {
           res.status(200).send({error: false, message: results})
         })
