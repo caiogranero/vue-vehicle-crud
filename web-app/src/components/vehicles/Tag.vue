@@ -6,7 +6,7 @@
       <div id="tag-year">2016</div>
     </md-layout>
     <md-layout md-flex="10" md-align="end" md-vertical-align="center">
-      <md-icon id="tag-icon" class="icon-pointer">local_offer</md-icon>
+      <md-icon class="icon-pointer custom-icon">local_offer</md-icon>
     </md-layout>
   </md-layout>
 </template>
@@ -43,11 +43,4 @@ export default {
     font-weight: 500
     font-size: 16px
     color: rgba(42, 49, 56, 0.5)
-
-  #tag-icon
-    color: rgb(42, 49, 56)
-
-  #tag-icon:hover
-    color: rgb(24, 156, 108)
-
 </style>

@@ -6,16 +6,18 @@
       </md-layout>
     </md-layout>
 
-    <md-layout md-align="center">
-      <md-layout md-flex="45" md-align="start">
+    <md-layout md-align="space-around" id="vehicle-content">
+      <md-layout md-flex="40" md-align="start" id="vehicle-tags-div">
         <h3>Lista de veículos</h3>
         <tag></tag>
       </md-layout>
-      <md-layout md-flex="45" md-align="start">
+      <md-layout md-flex="40" md-align="start">
         <h3>Detalhes</h3>
         <detail></detail>
       </md-layout>
     </md-layout>
+
+    <vehicle-modal></vehicle-modal>
   </div>
 </template>
 
@@ -23,10 +25,11 @@
 import PageTitle from '@/components/structure/PageTitle'
 import Tag from '@/components/vehicles/Tag'
 import Detail from '@/components/vehicles/Detail'
+import VehicleModal from '@/components/VehicleModal'
 
 export default {
   name: 'Vehicles',
-  components: { PageTitle, Tag, Detail }
+  components: { PageTitle, Tag, Detail, VehicleModal }
 }
 </script>
 
@@ -39,4 +42,9 @@ export default {
     font-size: 16px
     color: #2A3138
 
+  #vehicle-tags-div
+    align-content: flex-start
+
+  #vehicle-content
+    justify-content: space-around
 </style>

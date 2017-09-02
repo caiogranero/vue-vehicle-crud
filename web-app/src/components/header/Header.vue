@@ -26,7 +26,7 @@ export default {
         clearTimeout(this.keyTimer)
       }
       this.keyTimer = setTimeout(() => {
-        this.$store.commit('setQuery', this.qSearch)
+        console.log('searching..')
       }, 600)
     }
   }

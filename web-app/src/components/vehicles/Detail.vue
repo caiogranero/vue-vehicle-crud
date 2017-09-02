@@ -26,6 +26,17 @@
         a Letraset lançou decalques contendo passagens de Lorem Ipsum, e mais recentemente quando 
         passou a ser integrado a softwares de editoração eletrônica como Aldus PageMaker.</p>
     </md-layout>
+
+    <md-layout md-flex="100" id="footer-vehicle-description">
+      <md-layout md-flex="90" md-align="start">
+        <md-button class="md-raised md-primary btn-action">
+          <md-icon>mode_edit</md-icon> Editar
+        </md-button>
+      </md-layout>
+      <md-layout md-flex="10" md-align="end">
+        <md-icon id="tag-icon" class="custom-icon icon-pointer">local_offer</md-icon>
+      </md-layout>
+    </md-layout>
   </md-layout>
 </template>
 
@@ -58,4 +69,7 @@ export default {
 
   .detail-brand-year
     display: block
+
+  #footer-vehicle-description
+    border-top: 1px solid rgba(0, 0, 0, 0.2)
 </style>

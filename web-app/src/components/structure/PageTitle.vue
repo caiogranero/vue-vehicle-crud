@@ -3,8 +3,10 @@
     <md-layout md-flex="50" md-align="start">
       <h2>{{name}}</h2>
     </md-layout>
-    <md-layout md-flex="50" md-align="end" >
-      <md-icon class="md-size-1x" id="add-vehicle">add_circle</md-icon>
+    <md-layout md-flex="50" md-align="end">
+      <md-button class="md-icon-button md-raised custom-background-color" @click="newVehicle()">
+        <md-icon id="add-vehicle">add</md-icon>
+      </md-button>
     </md-layout>
   </md-layout>
 </template>
@@ -14,6 +16,11 @@ export default {
   name: 'PageTitle',
   props: {
     name: String
+  },
+  methods: {
+    newVehicle () {
+      this.$store.commit('setOpenVehicleModal', true)
+    }
   }
 }
 </script>
@@ -33,9 +40,9 @@ export default {
     margin-bottom: 30px
 
   #add-vehicle
-    font-size: 34px
+    color: white
 
   .md-icon
-    margin: auto 0px
-    margin-right: 30px
+    // margin: auto 0px
+    // margin-right: 30px
 </style>
