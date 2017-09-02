@@ -1,5 +1,5 @@
 const express = require('express')
-const consign = require('consign');
+const consign = require('consign')
 const bodyParser = require('body-parser')
 const helmet = require('helmet')
 const cookieParser = require('cookie-parser')
@@ -12,6 +12,6 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 consign()
     .include('./routes')
-    .into(app);
+    .into(app)
 
-module.exports = app;
+module.exports = app

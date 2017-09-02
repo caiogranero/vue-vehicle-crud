@@ -1,10 +1,13 @@
 const MongoClient = require('mongodb').MongoClient
-const assert = require('assert')
-const ObjectId = require('mongodb').ObjectID
-const url = 'mongodb://localhost:27017/test'
+const collection = 'test'
+const url = `mongodb://localhost:27017/${collection}`
+
 const db = {
+  getCollection () {
+    return collection
+  },
   open () {
-    return new Promise((resolve, reject)=>{
+    return new Promise((resolve, reject) => {
       MongoClient.connect(url, (err, db) => {
         if (err) {
           reject(err)
@@ -15,7 +18,7 @@ const db = {
     })
   },
   close (db) {
-    if(db){
+    if (db) {
       db.close()
     }
   }
