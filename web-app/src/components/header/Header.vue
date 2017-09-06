@@ -1,10 +1,10 @@
 <template>
   <md-layout id="header" md-align="center">
-    <md-layout md-flex="45" md-align="start" id="title-div">
-      <img src="../../assets/drop.svg" class="icon-pointer" width="40" height="224" @click="$router.push({name: 'Vídeos em destaque'})">
+    <md-layout md-flex="45" md-align="start" md-flex-small="20" id="title-div">
+      <img src="../../assets/drop.svg" class="icon-pointer" width="40" height="224" @click="$router.push({name: 'Vehicles'})">
       <h1 id="title">FULLSTACK</h1>
     </md-layout>
-    <md-layout md-flex="50" md-align="end">
+    <md-layout md-flex="50" md-flex-small="75" md-align="end">
       <input type="text" placeholder="BUSCA por um veículo" id="search-input" @keyup="initKeyTimer()" v-model="qSearch">
     </md-layout>
   </md-layout>
@@ -26,7 +26,22 @@ export default {
         clearTimeout(this.keyTimer)
       }
       this.keyTimer = setTimeout(() => {
-        console.log('searching..')
+        this.$store.commit('setSearching', true)
+        this.$store.commit('setSelectedVehicle', null)
+
+        // Check if there is a query to search
+        let query = this.qSearch ? {veiculo: this.qSearch} : null
+
+        this.$VehicleService.query(query).then(res => {
+          this.$store.commit('setSearchedVehicle', res.data.message)
+        }).catch(err => {
+          console.error(err)
+        }).then(() => {
+          // Timeout to simulate server request
+          setTimeout(() => {
+            this.$store.commit('setSearching', false)
+          }, 1000)
+        })
       }, 600)
     }
   }
@@ -64,4 +79,7 @@ export default {
 #title-div
   align-items: center
 
+@media (max-width: 944px)
+  #title
+    display: none
 </style>

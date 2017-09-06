@@ -8,18 +8,28 @@
         <md-icon id="add-vehicle">add</md-icon>
       </md-button>
     </md-layout>
+    <vehicle-modal :open="openModal" type="add" :onClose="onInserted"></vehicle-modal>
   </md-layout>
 </template>
 
 <script>
+import VehicleModal from '@/components/VehicleModal'
+
 export default {
   name: 'PageTitle',
+  components: { VehicleModal },
   props: {
-    name: String
+    name: String,
+    onInserted: Function
   },
   methods: {
     newVehicle () {
-      this.$store.commit('setOpenVehicleModal', true)
+      this.openModal = !this.openModal
+    }
+  },
+  data () {
+    return {
+      openModal: false
     }
   }
 }
@@ -41,8 +51,4 @@ export default {
 
   #add-vehicle
     color: white
-
-  .md-icon
-    // margin: auto 0px
-    // margin-right: 30px
 </style>

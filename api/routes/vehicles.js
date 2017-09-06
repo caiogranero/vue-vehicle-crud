@@ -6,8 +6,7 @@ module.exports = function (app) {
     if (req.body.veiculo &&
         req.body.marca &&
         req.body.ano &&
-        req.body.descricao &&
-        req.body.vendido) {
+        req.body.descricao) {
       req.body = Object.assign(req.body, {created: new Date(), updated: new Date()})
       Database.insert(req.body).then(results => {
         res.status(200).send({error: false, message: results.insertedId})
@@ -16,7 +15,7 @@ module.exports = function (app) {
         res.status(500).send({error: true, message: err.toString()})
       })
     } else {
-      res.status(200).send({error: true, message: 'Missing body content'})
+      res.status(400).send({error: true, message: 'Missing body content'})
     }
   })
 
@@ -29,16 +28,25 @@ module.exports = function (app) {
     })
   })
 
+  app.get('/api/veiculos/find', (req, res) => {
+    Database.query(req.query).then(results => {
+      res.status(200).send({error: false, message: results})
+    })
+    .catch(err => {
+      res.status(500).send({error: true, message: err.toString()})
+    })
+  })
+
   app.get('/api/veiculos/:id', (req, res) => {
     if (req.params.id) {
-      Database.query({_id: ObjectId(req.params.id)}).then(results => {
+      Database.findOne({_id: ObjectId(req.params.id)}).then(results => {
         res.status(200).send({error: false, message: results})
       })
       .catch(err => {
         res.status(500).send({error: true, message: err.toString()})
       })
     } else {
-      res.status(401).send({error: true, message: 'Missing param'})
+      res.status(204).send({error: true, message: 'Missing param'})
     }
   })
 
@@ -53,10 +61,10 @@ module.exports = function (app) {
           res.status(500).send({error: true, message: err.toString()})
         })
       } else {
-        res.status(401).send({error: true, message: 'Missing body content'})
+        res.status(204).send({error: true, message: 'Missing body content'})
       }
     } else {
-      res.status(401).send({error: true, message: 'Missing param'})
+      res.status(204).send({error: true, message: 'Missing param'})
     }
   })
 
@@ -71,10 +79,10 @@ module.exports = function (app) {
           res.status(500).send({error: true, message: err.toString()})
         })
       } else {
-        res.status(401).send({error: true, message: 'Missing body content'})
+        res.status(204).send({error: true, message: 'Missing body content'})
       }
     } else {
-      res.status(401).send({error: true, message: 'Missing param'})
+      res.status(204).send({error: true, message: 'Missing param'})
     }
   })
 
@@ -87,7 +95,7 @@ module.exports = function (app) {
         res.status(500).send({error: true, message: err.toString()})
       })
     } else {
-      res.status(401).send({error: true, message: 'Missing param'})
+      res.status(204).send({error: true, message: 'Missing param'})
     }
   })
 }

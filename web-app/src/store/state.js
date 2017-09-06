@@ -1,5 +1,7 @@
 const state = {
-  openVehicleModal: false
+  selectedVehicle: null,
+  searchedVehicle: [],
+  searching: false
 }
 
 export default state

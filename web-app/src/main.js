@@ -5,9 +5,11 @@ import App from './App'
 import router from './router'
 import store from './store'
 import VueMaterial from 'vue-material'
+import VideoService from './services/Video'
 import 'vue-material/dist/vue-material.css'
 
 Vue.use(VueMaterial)
+Vue.use(VideoService)
 
 Vue.config.productionTip = false
 

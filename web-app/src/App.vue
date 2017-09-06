@@ -29,14 +29,15 @@ export default {
 
 #app
   background-color: #E2E4E1
-  height: 100%
+  min-height: 100%
+  height: auto !important
 
 .btn-action
   height: 50px
   width: 130px
   background-color: rgb(42, 49, 56) !important
 
-body
+html, body
   height: 100%
 
 .md-input-focused:after

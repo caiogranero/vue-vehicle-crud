@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "yarn install && cd app && yarn install && yarn build"
+    "dev": "./node_modules/pm2/bin/pm2 start pm2-server.json",
+    "test": "./node_modules/mocha/bin/mocha"
   },
   "keywords": [],
   "author": "Caio Granero <caio.granero@usp.br>",
@@ -17,6 +17,11 @@
     "cors": "^2.8.4",
     "express": "^4.15.3",
     "helmet": "^3.6.1",
-    "mongod": "^2.0.0"
+    "mongodb": "^2.0.0",
+    "pm2": "^2.6.1"
+  },
+  "devDependencies": {
+    "mocha": "^3.5.0",
+    "should": "^13.0.0"
   }
 }

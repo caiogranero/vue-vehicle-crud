@@ -1,35 +1,30 @@
 <template>
   <md-layout md-flex="100" md-align="center" id="detail-area">
-    <md-layout md-flex="100" md-align="start" md-vertical-align="top">
-      <div id="detail-model">Palio G5 1.6 Flex</div>
+    <vehicle-modal :open="openModal" type="editar" :storedData="vehicleInfo" :onClose="getVehicleInfo"></vehicle-modal>
+
+    <md-layout md-flex="100" md-align="start" md-vertical-align="top" v-if="vehicleId">
+      <div id="detail-model">{{vehicleInfo.veiculo}}</div>
     </md-layout>
     
-    <md-layout md-flex="100" md-align="start" md-vertical-align="top">
+    <md-layout md-flex="100" md-align="start" md-vertical-align="top" v-if="vehicleId">
       <md-layout md-flex="50" md-align="start" md-vertical-align="top" class="detail-brand-year">
         <div id="detail-type">Marca</div>
-        <div id="detail-value">FIAT</div>
+        <div id="detail-value">{{vehicleInfo.marca}}</div>
       </md-layout>
 
       <md-layout md-flex="50" md-align="start" md-vertical-align="top" class="detail-brand-year">
         <div id="detail-type">Ano</div>
-        <div id="detail-value">2016</div>
+        <div id="detail-value">{{vehicleInfo.ano}}</div>
       </md-layout>
     </md-layout>
 
-    <md-layout md-flex="100" md-align="start" md-vertical-align="top">
-      <p>Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e
-      vem sendo utilizado desde o século XVI, quando um impressor desconhecido pegou uma bandeja de 
-      tipos e os embaralhou para fazer um livro de modelos de tipos. </p>
-      
-      <p>Lorem Ipsum sobreviveu não só a cinco séculos, como também ao salto para a editoração 
-        eletrônica, permanecendo essencialmente inalterado. Se popularizou na década de 60, quando 
-        a Letraset lançou decalques contendo passagens de Lorem Ipsum, e mais recentemente quando 
-        passou a ser integrado a softwares de editoração eletrônica como Aldus PageMaker.</p>
+    <md-layout md-flex="100" md-align="start" md-vertical-align="top" v-if="vehicleId">
+      <p>{{vehicleInfo.descricao}}</p>
     </md-layout>
 
-    <md-layout md-flex="100" id="footer-vehicle-description">
+    <md-layout md-flex="100" id="footer-vehicle-description" v-if="vehicleId">
       <md-layout md-flex="90" md-align="start">
-        <md-button class="md-raised md-primary btn-action">
+        <md-button class="md-raised md-primary btn-action" @click="editVehicle()">
           <md-icon>mode_edit</md-icon> Editar
         </md-button>
       </md-layout>
@@ -41,8 +36,39 @@
 </template>
 
 <script>
+import VehicleModal from '@/components/VehicleModal'
+
 export default {
-  name: 'Details'
+  name: 'Details',
+  components: { VehicleModal },
+  data () {
+    return {
+      vehicleInfo: {},
+      openModal: false
+    }
+  },
+  watch: {
+    vehicleId () {
+      this.getVehicleInfo()
+    }
+  },
+  computed: {
+    vehicleId () {
+      return this.$store.state.selectedVehicle
+    }
+  },
+  methods: {
+    editVehicle () {
+      this.openModal = !this.openModal
+    },
+
+    getVehicleInfo () {
+      this.$VehicleService.getById(this.vehicleId).then(res => {
+        res.data.message[0].vendido = typeof res.data.message[0].vendido === 'boolean' ? res.data.message[0].vendido : JSON.parse(res.data.message[0].vendido)
+        this.vehicleInfo = res.data.message[0]
+      })
+    }
+  }
 }
 </script>
 
@@ -72,4 +98,5 @@ export default {
 
   #footer-vehicle-description
     border-top: 1px solid rgba(0, 0, 0, 0.2)
+    align-items: center
 </style>

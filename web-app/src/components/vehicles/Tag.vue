@@ -1,19 +1,27 @@
 <template>
   <md-layout md-flex="100" md-align="center" id="tag-area">
     <md-layout md-flex="90" md-align="start" md-vertical-align="center" id="tag-info">
-      <div id="tag-brand">FIAT</div>
-      <div id="tag-model">Palio G5 1.6 Flex</div>
-      <div id="tag-year">2016</div>
+      <div id="tag-brand">{{data.marca}}</div>
+      <div id="tag-model">{{data.veiculo}}</div>
+      <div id="tag-year">{{data.ano}}</div>
     </md-layout>
     <md-layout md-flex="10" md-align="end" md-vertical-align="center">
-      <md-icon class="icon-pointer custom-icon">local_offer</md-icon>
+      <md-icon class="icon-pointer custom-icon" @click.native="selectCar(data._id)">local_offer</md-icon>
     </md-layout>
   </md-layout>
 </template>
 
 <script>
 export default {
-  name: 'Tag'
+  name: 'Tag',
+  props: {
+    data: Object
+  },
+  methods: {
+    selectCar (vehicleId) {
+      this.$store.commit('setSelectedVehicle', vehicleId)
+    }
+  }
 }
 </script>
 
